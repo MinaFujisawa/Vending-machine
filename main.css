@@ -1,0 +1,135 @@
+body {
+  text-align:center;
+  padding: 30px 0 ;
+  background: #EB2A1A !important;
+}
+.btn {
+  width:100%;
+}
+.productsArea {
+  padding: 0 15px;
+}
+.productsArea .product-row-group{
+  background: #fff;
+  padding: 30px 15px;
+}
+.product {
+  width: 50px;
+  height: 90px;
+  line-height: 50px;
+  margin: 0 auto 15px;
+  background: #5F91DA;
+  color: #fff;
+  border: #fff 1px solid;
+  font-family: sans-serif;
+  border-radius: 6px;
+}
+
+
+#displayPrice {
+  position: relative;
+  background : #353535;
+  padding: 10px;
+  margin-bottom: 15px;
+  color : #CD2828;
+  font-size: 30px;
+  text-align: right;
+}
+#displayPrice span{
+  position: absolute;
+  left: 10px;
+  text-align: left;
+}
+.payArea .row {
+    margin-right: -5px;
+    margin-left: -5px;
+}
+.payArea .form-group {
+  margin-bottom: 8px;
+  padding: 0 5px;
+}
+
+.payArea .form-group .priceSelectBtn{
+  background: #fff;
+  box-shadow: 0 3px 0 #BDBDBD;
+
+}
+
+.payArea #changeBtn{
+  margin-top: 20px;
+}
+
+.payArea .changeBox {
+  background: #86858E;
+  padding: 40px;
+  margin-top: 20px;
+}
+
+#result {
+  position: relative;;
+  height: 170px;
+  margin-top: 30px;
+  padding: 0 50px;
+  background: #86858E;
+  overflow: hidden;
+  border-bottom: 35px solid #6C6B73;
+}
+#result .resultProductGroup{
+  position: absolute;
+  bottom: 0;
+}
+#result .resultProductGroup .product{
+  margin: 0 28px 0 0;
+}
+#result .resultProductGroup .product:first-child{
+  margin-left: 0;
+}
+
+.container-table {
+  display: table;
+  width:100%;
+}
+.vertical-center-row {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.pushBtn {
+  position: relative;
+  transition: all 0.1s;
+  -webkit-transition: all 0.1s;
+}
+
+.productsArea .purchaseBtn{
+  cursor: initial;
+  color: #686868;
+  box-shadow: 0 3px 0 #848484;
+  border-radius: 20px;
+}
+.productsArea .purchaseBtn:hover{
+  color: #686868;
+}
+
+
+.pushBtn:active{
+  transform: translate(0px,3px);
+  -webkit-transform: translate(0px,3px);
+  border-bottom: 1px solid;
+}
+
+/* for js */
+.btnEnable {
+  background: #4BBD4B;
+  color: #fff !important;
+  font-weight: bold;
+  cursor: pointer !important;
+  box-shadow: 0 3px 0 #479747 !important;
+}
+.btnEnable:active {
+  box-shadow: none;
+}
+
+.btn:focus, .btn:active:focus, .btn.active:focus {
+ outline: none !important;
+ outline-style: none !important; 
+} 

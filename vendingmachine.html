@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link href="main.css" rel="stylesheet">
+	<!-- Bootstrap core CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<!-- Bootstrap Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+	<link href='http://fontsforweb.com/font/getcss?id=1091&apikey=1c76eba94c0140782ed9d481242cb29e' rel='stylesheet' type='text/css'>
+</head>
+<body class="fontsforweb_DSDIGI">
+	<div class="container container-fluid">
+		<div class="row">
+			<div class="col-md-9">
+				<div class="productsArea">
+				<div class="row product-row-group">
+					<div class="col-md-2">
+						<div class="product">A</div>
+						<button class="purchaseBtn btn pushBtn" onfocus="this.blur();">¥120</button>
+					</div>
+					<div class="col-md-2">
+						<div class="product">B</div>
+						<button class="purchaseBtn btn pushBtn">¥150</button>
+					</div>
+					<div class="col-md-2">
+						<div class="product">C</div>
+						<button class="purchaseBtn btn pushBtn">¥110</button>
+					</div>
+					<div class="col-md-2">
+						<div class="product">D</div>
+						<button class="purchaseBtn btn pushBtn">¥150</button>
+					</div>
+					<div class="col-md-2">
+						<div class="product">E</div>
+						<button class="purchaseBtn btn pushBtn">¥120</button>
+					</div>
+					<div class="col-md-2">
+						<div class="product">F</div>
+						<button class="purchaseBtn btn pushBtn">¥150</button>
+					</div>
+				</div>
+
+				<div class="row">
+				    <div id="result"><div class="resultProductGroup"></div></div>
+				 </div>
+				 </div>
+
+			</div>
+
+			<div class="payArea col-md-3">
+	        	<div id="displayPrice"><span>¥</span>0000</div>
+
+		        <div class="row">
+		          <div class="form-group col-md-6">
+		            <button class="priceSelectBtn btn pushBtn">1000</button>
+		          </div>
+		          <div class="form-group col-md-6">
+		            <button class="priceSelectBtn btn pushBtn">500</button>
+		          </div>
+		        </div>
+		        <div class="row">
+		          <div class="form-group col-md-6">
+		            <button class="priceSelectBtn btn pushBtn">100</button>
+		          </div>
+		          <div class="form-group col-md-6">
+		            <button class="priceSelectBtn btn pushBtn">50</button>
+		          </div>
+		        </div>
+		        <div class="row">
+		          <div class="form-group col-md-6">
+		            <button class="priceSelectBtn btn pushBtn">10</button>
+		          </div>
+		        </div>
+
+				<div><button id="changeBtn" class="btn">CHANGE / CANCEL</button></div>
+				<div class="changeBox"></div>
+
+			</div>
+		</div> <!-- end row -->
+	</div> <!-- end container -->
+
+	<script type="text/javascript">
+
+		
+		// price
+		(function (){
+			var priceSelectBtn = document.querySelectorAll('.priceSelectBtn');
+			var selectedPrice;
+			var priceValue = [];
+			var amount = 0;
+			var displayPrice = document.getElementById('displayPrice');
+			var EnablePurchaseBtn;
+			var result = document.querySelector('.resultProductGroup');
+
+			
+			// get item price
+			var purchaseBtn = document.querySelectorAll('.purchaseBtn');
+			var itemPrice = [];
+			for (i = 0; i < purchaseBtn.length; i++) {
+				itemPrice[i] = purchaseBtn[i].innerHTML.substr( 1 );
+			}
+
+			// money count
+			for (i = 0; i < priceSelectBtn.length; i++) {
+				priceSelectBtn[i].addEventListener("click", function(e){
+				 	e.preventDefault();
+
+					// get clicked price and sum
+					amount += Number(this.innerHTML);
+					// show total amount
+					displayPrice.innerHTML = '<span>¥</span>' + amount;
+
+
+					// check being reached the prices
+					for (i = 0; i < purchaseBtn.length; i++) {
+
+						EnablePurchaseBtn = this.classList.contains('btnEnable');
+						// get item price
+						if (!EnablePurchaseBtn && itemPrice[i] <= amount) {
+							// add class
+							purchaseBtn[i].className +=' btnEnable';
+						} 
+					}
+
+					
+				});
+			}
+
+			// put out result
+			for (i = 0; i < purchaseBtn.length; i++) {
+
+				//
+
+				purchaseBtn[i].addEventListener("click", function(){
+					// EnablePurchaseBtn = purchaseBtn[i].classList.contains('btnEnable');
+
+					if(amount >= this.innerHTML.substr( 1 )){
+						amount -= this.innerHTML.substr( 1 );
+						displayPrice.innerHTML = '<span>¥</span>' + amount; // 繰り返してるからfunctionにしたい
+					} else {
+						displayPrice.innerHTML = '<span>¥</span>' + amount; // 繰り返してるからfunctionにしたい
+
+						//not enough のあと、３秒後入っているお金を表示
+						return;
+					}
+					
+
+					EnablePurchaseBtn = this.classList.contains('btnEnable'); //上のと同じ処理もう一回してるけどおｋ？
+
+					if (EnablePurchaseBtn) {
+						// クリックされたボタンのプロダクト取得
+						var purchasedProduct = this.previousElementSibling;
+						// insert tha above tag to result
+						var element = document.createElement(purchasedProduct.tagName);
+						element.setAttribute("class", purchasedProduct.className +" pull-left");
+						element.innerHTML = purchasedProduct.innerHTML;
+						result.appendChild(element);
+					}
+
+
+					// check being reached the prices
+					for (j = 0; j < purchaseBtn.length; j++) {
+
+						EnablePurchaseBtn = this.classList.contains('btnEnable');
+						// get item price
+						if (EnablePurchaseBtn && itemPrice[j] >= amount) {
+							// remove class
+							purchaseBtn[j].classList.remove("btnEnable");
+							console.log(purchaseBtn[j]);
+						} 
+					}
+
+					
+				});
+
+			}
+
+
+
+
+		}());
+
+	</script>
+</body>
+</html>
