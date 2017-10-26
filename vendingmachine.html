@@ -77,18 +77,26 @@
 		        </div>
 
 				<div><button id="changeBtn" class="btn">CHANGE / CANCEL</button></div>
-				<div class="changeBox"></div>
+				<div class="changeBox">
+					
+						<!-- <div class="bill">1000</div>
+						<div class="coin fiveH">500</div>
+						<div class="coin oneH">100</div>
+						<div class="coin fifty">50</div>
+						<div class="coin ten">10</div> -->
+				</div>
 
 			</div>
 		</div> <!-- end row -->
 	</div> <!-- end container -->
+	
 
 	<script type="text/javascript">
 
 		
-		// price
 		(function (){
 			var priceSelectBtn = document.querySelectorAll('.priceSelectBtn');
+			
 			var selectedPrice;
 			var priceValue = [];
 			var amount = 0;
@@ -103,6 +111,48 @@
 			for (i = 0; i < purchaseBtn.length; i++) {
 				itemPrice[i] = purchaseBtn[i].innerHTML.substr( 1 );
 			}
+
+			// Change / Cancel
+			var changeBtn = document.getElementById('changeBtn');
+			var changeBox = document.querySelector('.changeBox');
+			changeBtn.addEventListener("click", function(e){
+				// reset display price
+				displayPrice.innerHTML = '<span>¥</span>' + "0000";
+
+				// set disable
+				for (btn of purchaseBtn) {
+					btn.classList.remove("btnEnable");
+				}
+				
+
+				while (amount > 0) {
+
+					var div = document.createElement('div');
+					
+					if (amount >= 1000){
+						div.className = "bill"
+						div.innerHTML = "1000"
+						amount -= 1000;
+					} else if (amount >= 500) {
+						div.className = "coin fiveH"
+						div.innerHTML = "500"
+						amount -= 500;
+					} else if (amount >= 100) {
+						div.className = "coin"
+						div.innerHTML = "100"
+						amount -= 100;
+					} else if (amount >= 50) {
+						div.className = "coin"
+						div.innerHTML = "50"
+						amount -= 50;
+					} else if (amount >= 10) {
+						div.className = "coin ten"
+						div.innerHTML = "10"
+						amount -= 10;
+					}
+					changeBox.appendChild(div);
+				}
+			});
 
 			// money count
 			for (i = 0; i < priceSelectBtn.length; i++) {
@@ -122,10 +172,9 @@
 						// get item price
 						if (!EnablePurchaseBtn && itemPrice[i] <= amount) {
 							// add class
-							purchaseBtn[i].className +=' btnEnable';
+							purchaseBtn[i].className += ' btnEnable';
 						} 
 					}
-
 					
 				});
 			}
@@ -133,23 +182,21 @@
 			// put out result
 			for (i = 0; i < purchaseBtn.length; i++) {
 
-				//
-
 				purchaseBtn[i].addEventListener("click", function(){
 					// EnablePurchaseBtn = purchaseBtn[i].classList.contains('btnEnable');
 
 					if(amount >= this.innerHTML.substr( 1 )){
 						amount -= this.innerHTML.substr( 1 );
-						displayPrice.innerHTML = '<span>¥</span>' + amount; // 繰り返してるからfunctionにしたい
+						displayPrice.innerHTML = '<span>¥</span>' + amount;
+					} else if (amount == 0) {
+						displayPrice.innerHTML = '<span>¥</span>' + "0000";
 					} else {
-						displayPrice.innerHTML = '<span>¥</span>' + amount; // 繰り返してるからfunctionにしたい
-
-						//not enough のあと、３秒後入っているお金を表示
+						displayPrice.innerHTML = '<span>¥</span>' + amount;
 						return;
 					}
 					
 
-					EnablePurchaseBtn = this.classList.contains('btnEnable'); //上のと同じ処理もう一回してるけどおｋ？
+					EnablePurchaseBtn = this.classList.contains('btnEnable');
 
 					if (EnablePurchaseBtn) {
 						// クリックされたボタンのプロダクト取得
@@ -173,15 +220,8 @@
 							console.log(purchaseBtn[j]);
 						} 
 					}
-
-					
 				});
-
 			}
-
-
-
-
 		}());
 
 	</script>

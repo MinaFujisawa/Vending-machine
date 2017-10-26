@@ -61,9 +61,42 @@ body {
 
 .payArea .changeBox {
   background: #86858E;
-  padding: 40px;
+  padding: 20px;
   margin-top: 20px;
+  min-height: 130px;
+  overflow: hidden;
 }
+
+/* for money */
+.changeBox > div {
+  font-size: 17px;
+  font-family: serif;
+  float: left;
+  margin: 0 5px;
+}
+ .bill {
+  background-color: #e7dfbb;
+  width: 50px;
+}
+ .coin {
+  width: 35px;
+  height: 35px;
+  line-height: 35px;
+  background-color: #dcdedd;
+  border-radius: 50px;
+  -moz-border-radius:50px;
+  -webkit-border-radius: 50px;
+}
+ .fiveH {
+  width: 45px;
+  height: 45px;
+  line-height: 45px;
+}
+
+ .ten {
+  background-color: #946635;
+}
+
 
 #result {
   position: relative;;
@@ -116,6 +149,8 @@ body {
   -webkit-transform: translate(0px,3px);
   border-bottom: 1px solid;
 }
+
+
 
 /* for js */
 .btnEnable {
