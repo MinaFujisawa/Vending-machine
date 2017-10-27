@@ -17,36 +17,49 @@
 		<div class="row">
 			<div class="col-md-9">
 				<div class="productsArea">
-				<div class="row product-row-group">
-					<div class="col-md-2">
-						<div class="product">A</div>
-						<button class="purchaseBtn btn pushBtn" onfocus="this.blur();">¥120</button>
+					<div class="row product-row-group">
+						<div class="col-md-3">
+							<div class="product">A</div>
+							<button class="purchaseBtn btn pushBtn">¥120</button>
+						</div>
+						<div class="col-md-3">
+							<div class="product">B</div>
+							<button class="purchaseBtn btn pushBtn">¥150</button>
+						</div>
+						<div class="col-md-3">
+							<div class="product">C</div>
+							<button class="purchaseBtn btn pushBtn">¥110</button>
+						</div>
+						<div class="col-md-3">
+							<div class="product">D</div>
+							<button class="purchaseBtn btn pushBtn">¥150</button>
+						</div>
+						
 					</div>
-					<div class="col-md-2">
-						<div class="product">B</div>
-						<button class="purchaseBtn btn pushBtn">¥150</button>
-					</div>
-					<div class="col-md-2">
-						<div class="product">C</div>
-						<button class="purchaseBtn btn pushBtn">¥110</button>
-					</div>
-					<div class="col-md-2">
-						<div class="product">D</div>
-						<button class="purchaseBtn btn pushBtn">¥150</button>
-					</div>
-					<div class="col-md-2">
-						<div class="product">E</div>
-						<button class="purchaseBtn btn pushBtn">¥120</button>
-					</div>
-					<div class="col-md-2">
-						<div class="product">F</div>
-						<button class="purchaseBtn btn pushBtn">¥150</button>
-					</div>
-				</div>
 
-				<div class="row">
-				    <div id="result"><div class="resultProductGroup"></div></div>
-				 </div>
+					<div class="row product-row-group">
+						<div class="col-md-3">
+							<div class="product">E</div>
+							<button class="purchaseBtn btn pushBtn">¥140</button>
+						</div>
+						<div class="col-md-3">
+							<div class="product">F</div>
+							<button class="purchaseBtn btn pushBtn">¥130</button>
+						</div>
+						<div class="col-md-3">
+							<div class="product">G</div>
+							<button class="purchaseBtn btn pushBtn">¥100</button>
+						</div>
+						<div class="col-md-3">
+							<div class="product">H</div>
+							<button class="purchaseBtn btn pushBtn">¥150</button>
+						</div>
+						
+					</div>
+
+					<div class="row">
+					    <div id="result"><div class="resultProductGroup"></div></div>
+					 </div>
 				 </div>
 
 			</div>
@@ -77,25 +90,20 @@
 		        </div>
 
 				<div><button id="changeBtn" class="btn">CHANGE / CANCEL</button></div>
-				<div class="changeBox">
-					
-						<!-- <div class="bill">1000</div>
-						<div class="coin fiveH">500</div>
-						<div class="coin oneH">100</div>
-						<div class="coin fifty">50</div>
-						<div class="coin ten">10</div> -->
-				</div>
+				<div class="changeBox"></div>
 
 			</div>
 		</div> <!-- end row -->
 	</div> <!-- end container -->
+
+	<button id="resetBtn">Reset</button>
 	
 
 	<script type="text/javascript">
 
 		
 		(function (){
-			var priceSelectBtn = document.querySelectorAll('.priceSelectBtn');
+			var priceSelectBtns = document.querySelectorAll('.priceSelectBtn');
 			
 			var selectedPrice;
 			var priceValue = [];
@@ -106,10 +114,10 @@
 
 			
 			// get item price
-			var purchaseBtn = document.querySelectorAll('.purchaseBtn');
+			var purchaseBtns = document.querySelectorAll('.purchaseBtn');
 			var itemPrice = [];
-			for (i = 0; i < purchaseBtn.length; i++) {
-				itemPrice[i] = purchaseBtn[i].innerHTML.substr( 1 );
+			for (i = 0; i < purchaseBtns.length; i++) {
+				itemPrice[i] = purchaseBtns[i].innerHTML.substr( 1 );
 			}
 
 			// Change / Cancel
@@ -120,7 +128,7 @@
 				displayPrice.innerHTML = '<span>¥</span>' + "0000";
 
 				// set disable
-				for (btn of purchaseBtn) {
+				for (btn of purchaseBtns) {
 					btn.classList.remove("btnEnable");
 				}
 				
@@ -130,33 +138,33 @@
 					var div = document.createElement('div');
 					
 					if (amount >= 1000){
-						div.className = "bill"
-						div.innerHTML = "1000"
+						div.className = "bill";
+						div.innerHTML = "1000";
 						amount -= 1000;
 					} else if (amount >= 500) {
-						div.className = "coin fiveH"
-						div.innerHTML = "500"
+						div.className = "coin fiveH";
+						div.innerHTML = "500";
 						amount -= 500;
 					} else if (amount >= 100) {
-						div.className = "coin"
-						div.innerHTML = "100"
+						div.className = "coin";
+						div.innerHTML = "100";
 						amount -= 100;
 					} else if (amount >= 50) {
-						div.className = "coin"
-						div.innerHTML = "50"
+						div.className = "coin";
+						div.innerHTML = "50";
 						amount -= 50;
 					} else if (amount >= 10) {
-						div.className = "coin ten"
-						div.innerHTML = "10"
+						div.className = "coin ten";
+						div.innerHTML = "10";
 						amount -= 10;
 					}
 					changeBox.appendChild(div);
 				}
 			});
 
-			// money count
-			for (i = 0; i < priceSelectBtn.length; i++) {
-				priceSelectBtn[i].addEventListener("click", function(e){
+			// check money
+			for (i = 0; i < priceSelectBtns.length; i++) {
+				priceSelectBtns[i].addEventListener("click", function(e){
 				 	e.preventDefault();
 
 					// get clicked price and sum
@@ -166,13 +174,13 @@
 
 
 					// check being reached the prices
-					for (i = 0; i < purchaseBtn.length; i++) {
+					for (i = 0; i < purchaseBtns.length; i++) {
 
 						EnablePurchaseBtn = this.classList.contains('btnEnable');
 						// get item price
 						if (!EnablePurchaseBtn && itemPrice[i] <= amount) {
 							// add class
-							purchaseBtn[i].className += ' btnEnable';
+							purchaseBtns[i].className += ' btnEnable';
 						} 
 					}
 					
@@ -180,9 +188,8 @@
 			}
 
 			// put out result
-			for (i = 0; i < purchaseBtn.length; i++) {
-
-				purchaseBtn[i].addEventListener("click", function(){
+			for (i = 0; i < purchaseBtns.length; i++) {
+				purchaseBtns[i].addEventListener("click", function(){
 					// EnablePurchaseBtn = purchaseBtn[i].classList.contains('btnEnable');
 
 					if(amount >= this.innerHTML.substr( 1 )){
@@ -210,14 +217,15 @@
 
 
 					// check being reached the prices
-					for (j = 0; j < purchaseBtn.length; j++) {
+					for (j = 0; j < purchaseBtns.length; j++) {
 
-						EnablePurchaseBtn = this.classList.contains('btnEnable');
+						// EnablePurchaseBtn = this.classList.contains('btnEnable');
+
 						// get item price
-						if (EnablePurchaseBtn && itemPrice[j] >= amount) {
+						if (itemPrice[j] >= amount) {
 							// remove class
-							purchaseBtn[j].classList.remove("btnEnable");
-							console.log(purchaseBtn[j]);
+							purchaseBtns[j].classList.remove("btnEnable");
+							console.log(purchaseBtns[j]);
 						} 
 					}
 				});
