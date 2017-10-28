@@ -3,6 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Document</title>
+
 	<link href="main.css" rel="stylesheet">
 	<!-- Bootstrap core CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -65,7 +66,7 @@
 			</div>
 
 			<div class="payArea col-md-3">
-	        	<div id="displayPrice"><span>¥</span>0000</div>
+	        	<div id="priceDisplay"><span>¥</span>0000</div>
 
 		        <div class="row">
 		          <div class="form-group col-md-6">
@@ -104,13 +105,13 @@
 		
 		(function (){
 			var priceSelectBtns = document.querySelectorAll('.priceSelectBtn');
-			
 			var selectedPrice;
-			var priceValue = [];
+			// var priceValue = [];
 			var amount = 0;
-			var displayPrice = document.getElementById('displayPrice');
-			var EnablePurchaseBtn;
-			var result = document.querySelector('.resultProductGroup');
+			var priceDisplay = document.getElementById('priceDisplay');
+			var isEnablePurchaseBtn;
+			var outputBox = document.querySelector('.resultProductGroup');
+			var changeBox = document.querySelector('.changeBox');
 
 			
 			// get item price
@@ -120,12 +121,36 @@
 				itemPrice[i] = purchaseBtns[i].innerHTML.substr( 1 );
 			}
 
+			// Reset button
+			var resetBtn = document.getElementById('resetBtn');
+			resetBtn.addEventListener("click", function(e){
+				// reset display price
+				priceDisplay.innerHTML = '<span>¥</span>' + "0000";
+
+				// set disable
+				for (btn of purchaseBtns) {
+					btn.classList.remove("btnEnable");
+				}
+
+				// reset outputBox
+				while (outputBox.firstChild) {
+				    outputBox.removeChild(outputBox.firstChild);
+				}
+
+				// reset changeBox
+				while (changeBox.firstChild) {
+				    changeBox.removeChild(changeBox.firstChild);
+				}
+
+
+			});
+
 			// Change / Cancel
 			var changeBtn = document.getElementById('changeBtn');
-			var changeBox = document.querySelector('.changeBox');
+			
 			changeBtn.addEventListener("click", function(e){
 				// reset display price
-				displayPrice.innerHTML = '<span>¥</span>' + "0000";
+				priceDisplay.innerHTML = '<span>¥</span>' + "0000";
 
 				// set disable
 				for (btn of purchaseBtns) {
@@ -170,15 +195,15 @@
 					// get clicked price and sum
 					amount += Number(this.innerHTML);
 					// show total amount
-					displayPrice.innerHTML = '<span>¥</span>' + amount;
+					priceDisplay.innerHTML = '<span>¥</span>' + amount;
 
 
 					// check being reached the prices
 					for (i = 0; i < purchaseBtns.length; i++) {
 
-						EnablePurchaseBtn = this.classList.contains('btnEnable');
+						isEnablePurchaseBtn = this.classList.contains('btnEnable');
 						// get item price
-						if (!EnablePurchaseBtn && itemPrice[i] <= amount) {
+						if (!isEnablePurchaseBtn && itemPrice[i] <= amount) {
 							// add class
 							purchaseBtns[i].className += ' btnEnable';
 						} 
@@ -190,36 +215,36 @@
 			// put out result
 			for (i = 0; i < purchaseBtns.length; i++) {
 				purchaseBtns[i].addEventListener("click", function(){
-					// EnablePurchaseBtn = purchaseBtn[i].classList.contains('btnEnable');
+					// isEnablePurchaseBtn = purchaseBtn[i].classList.contains('btnEnable');
 
 					if(amount >= this.innerHTML.substr( 1 )){
 						amount -= this.innerHTML.substr( 1 );
-						displayPrice.innerHTML = '<span>¥</span>' + amount;
+						priceDisplay.innerHTML = '<span>¥</span>' + amount;
 					} else if (amount == 0) {
-						displayPrice.innerHTML = '<span>¥</span>' + "0000";
+						priceDisplay.innerHTML = '<span>¥</span>' + "0000";
 					} else {
-						displayPrice.innerHTML = '<span>¥</span>' + amount;
+						priceDisplay.innerHTML = '<span>¥</span>' + amount;
 						return;
 					}
 					
 
-					EnablePurchaseBtn = this.classList.contains('btnEnable');
+					isEnablePurchaseBtn = this.classList.contains('btnEnable');
 
-					if (EnablePurchaseBtn) {
+					if (isEnablePurchaseBtn) {
 						// クリックされたボタンのプロダクト取得
 						var purchasedProduct = this.previousElementSibling;
 						// insert tha above tag to result
 						var element = document.createElement(purchasedProduct.tagName);
 						element.setAttribute("class", purchasedProduct.className +" pull-left");
 						element.innerHTML = purchasedProduct.innerHTML;
-						result.appendChild(element);
+						outputBox.appendChild(element);
 					}
 
 
 					// check being reached the prices
 					for (j = 0; j < purchaseBtns.length; j++) {
 
-						// EnablePurchaseBtn = this.classList.contains('btnEnable');
+						// isEnablePurchaseBtn = this.classList.contains('btnEnable');
 
 						// get item price
 						if (itemPrice[j] >= amount) {

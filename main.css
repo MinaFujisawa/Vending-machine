@@ -30,7 +30,7 @@ body {
 }
 
 
-#displayPrice {
+#priceDisplay {
   position: relative;
   background : #353535;
   padding: 10px;
@@ -39,7 +39,7 @@ body {
   font-size: 30px;
   text-align: right;
 }
-#displayPrice span{
+#priceDisplay span{
   position: absolute;
   left: 10px;
   text-align: left;
