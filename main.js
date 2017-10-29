@@ -4,11 +4,7 @@
 	var changeBox = document.getElementById("changeBox");
 	var outputBox = document.querySelector(".resultProductGroup");
 	var purchaseBtns = document.querySelectorAll(".purchaseBtn");
-	var changeBtn = document.getElementById("changeBtn");
-	var resetBtn = document.getElementById("resetBtn");
 
-
-	var selectedPrice;
 	var amount = 0;
 	var itemPrices = [];
 
@@ -19,7 +15,6 @@
 	}
 	
 	function setPurchasableItems() {
-		console.log(amount);
 		for (i = 0; i < purchaseBtns.length; i++) {
 			if (itemPrices[i] <= amount) {
 				purchaseBtns[i].className += " btnEnable";
@@ -29,7 +24,7 @@
 		}
 	}
 
-	// check money
+	// check clicked priceSelectBtn
 	for (priceSelectBtn of priceSelectBtns) {
 		priceSelectBtn.addEventListener("click", function(e){
 		 	e.preventDefault();
@@ -68,6 +63,7 @@
 	}
 
 	// Change / Cancel
+	var changeBtn = document.getElementById("changeBtn");
 	changeBtn.addEventListener("click", function(){
 		
 		priceDisplay.innerHTML = "<span>¥</span>" + "0000";
@@ -108,6 +104,7 @@
 
 
 	// Reset button
+	var resetBtn = document.getElementById("resetBtn");
 	resetBtn.addEventListener("click", function(){
 		amount = 0;
 		priceDisplay.innerHTML = "<span>¥</span>" + "0000";
