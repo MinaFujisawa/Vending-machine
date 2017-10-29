@@ -11,7 +11,7 @@
 	<!-- Bootstrap Optional theme -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
-	<link href='http://fontsforweb.com/font/getcss?id=1091&apikey=1c76eba94c0140782ed9d481242cb29e' rel='stylesheet' type='text/css'>
+	<link href="http://fontsforweb.com/font/getcss?id=1091&apikey=1c76eba94c0140782ed9d481242cb29e" rel="stylesheet" type="text/css">
 </head>
 <body class="fontsforweb_DSDIGI">
 	<div class="container container-fluid">
@@ -91,7 +91,7 @@
 		        </div>
 
 				<div><button id="changeBtn" class="btn">CHANGE / CANCEL</button></div>
-				<div class="changeBox"></div>
+				<div id="changeBox"></div>
 
 			</div>
 		</div> <!-- end row -->
@@ -100,163 +100,6 @@
 	<button id="resetBtn">Reset</button>
 	
 
-	<script type="text/javascript">
-
-		
-		(function (){
-			var priceSelectBtns = document.querySelectorAll('.priceSelectBtn');
-			var selectedPrice;
-			// var priceValue = [];
-			var amount = 0;
-			var priceDisplay = document.getElementById('priceDisplay');
-			var isEnablePurchaseBtn;
-			var outputBox = document.querySelector('.resultProductGroup');
-			var changeBox = document.querySelector('.changeBox');
-
-			
-			// get item price
-			var purchaseBtns = document.querySelectorAll('.purchaseBtn');
-			var itemPrice = [];
-			for (i = 0; i < purchaseBtns.length; i++) {
-				itemPrice[i] = purchaseBtns[i].innerHTML.substr( 1 );
-			}
-
-			// Reset button
-			var resetBtn = document.getElementById('resetBtn');
-			resetBtn.addEventListener("click", function(e){
-				// reset display price
-				priceDisplay.innerHTML = '<span>¥</span>' + "0000";
-
-				// set disable
-				for (btn of purchaseBtns) {
-					btn.classList.remove("btnEnable");
-				}
-
-				// reset outputBox
-				while (outputBox.firstChild) {
-				    outputBox.removeChild(outputBox.firstChild);
-				}
-
-				// reset changeBox
-				while (changeBox.firstChild) {
-				    changeBox.removeChild(changeBox.firstChild);
-				}
-
-
-			});
-
-			// Change / Cancel
-			var changeBtn = document.getElementById('changeBtn');
-			
-			changeBtn.addEventListener("click", function(e){
-				// reset display price
-				priceDisplay.innerHTML = '<span>¥</span>' + "0000";
-
-				// set disable
-				for (btn of purchaseBtns) {
-					btn.classList.remove("btnEnable");
-				}
-				
-
-				while (amount > 0) {
-
-					var div = document.createElement('div');
-					
-					if (amount >= 1000){
-						div.className = "bill";
-						div.innerHTML = "1000";
-						amount -= 1000;
-					} else if (amount >= 500) {
-						div.className = "coin fiveH";
-						div.innerHTML = "500";
-						amount -= 500;
-					} else if (amount >= 100) {
-						div.className = "coin";
-						div.innerHTML = "100";
-						amount -= 100;
-					} else if (amount >= 50) {
-						div.className = "coin";
-						div.innerHTML = "50";
-						amount -= 50;
-					} else if (amount >= 10) {
-						div.className = "coin ten";
-						div.innerHTML = "10";
-						amount -= 10;
-					}
-					changeBox.appendChild(div);
-				}
-			});
-
-			// check money
-			for (i = 0; i < priceSelectBtns.length; i++) {
-				priceSelectBtns[i].addEventListener("click", function(e){
-				 	e.preventDefault();
-
-					// get clicked price and sum
-					amount += Number(this.innerHTML);
-					// show total amount
-					priceDisplay.innerHTML = '<span>¥</span>' + amount;
-
-
-					// check being reached the prices
-					for (i = 0; i < purchaseBtns.length; i++) {
-
-						isEnablePurchaseBtn = this.classList.contains('btnEnable');
-						// get item price
-						if (!isEnablePurchaseBtn && itemPrice[i] <= amount) {
-							// add class
-							purchaseBtns[i].className += ' btnEnable';
-						} 
-					}
-					
-				});
-			}
-
-			// put out result
-			for (i = 0; i < purchaseBtns.length; i++) {
-				purchaseBtns[i].addEventListener("click", function(){
-					// isEnablePurchaseBtn = purchaseBtn[i].classList.contains('btnEnable');
-
-					if(amount >= this.innerHTML.substr( 1 )){
-						amount -= this.innerHTML.substr( 1 );
-						priceDisplay.innerHTML = '<span>¥</span>' + amount;
-					} else if (amount == 0) {
-						priceDisplay.innerHTML = '<span>¥</span>' + "0000";
-					} else {
-						priceDisplay.innerHTML = '<span>¥</span>' + amount;
-						return;
-					}
-					
-
-					isEnablePurchaseBtn = this.classList.contains('btnEnable');
-
-					if (isEnablePurchaseBtn) {
-						// クリックされたボタンのプロダクト取得
-						var purchasedProduct = this.previousElementSibling;
-						// insert tha above tag to result
-						var element = document.createElement(purchasedProduct.tagName);
-						element.setAttribute("class", purchasedProduct.className +" pull-left");
-						element.innerHTML = purchasedProduct.innerHTML;
-						outputBox.appendChild(element);
-					}
-
-
-					// check being reached the prices
-					for (j = 0; j < purchaseBtns.length; j++) {
-
-						// isEnablePurchaseBtn = this.classList.contains('btnEnable');
-
-						// get item price
-						if (itemPrice[j] >= amount) {
-							// remove class
-							purchaseBtns[j].classList.remove("btnEnable");
-							console.log(purchaseBtns[j]);
-						} 
-					}
-				});
-			}
-		}());
-
-	</script>
+	<script type="text/javascript" src="main.js"></script>
 </body>
 </html>

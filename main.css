@@ -64,19 +64,17 @@ body {
   margin-top: 20px;
 }
 
-.payArea .changeBox {
+.payArea #changeBox {
   background: #86858E;
   padding: 20px;
   margin-top: 20px;
   min-height: 130px;
-  overflow: hidden;
 }
 
 /* for money */
-.changeBox div {
+#changeBox div {
   font-size: 17px;
   font-family: serif;
-  float: left;
   margin: 0 5px;
 }
 .bill {
